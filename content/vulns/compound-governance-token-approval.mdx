@@ -1,0 +1,41 @@
+---
+title: "Compound Governance Proposal 117 Token Approval"
+slug: "compound-governance-token-approval"
+severity: "high"
+protocol: "Compound"
+chain: "Ethereum"
+category: "governance"
+date: "2022-10-27"
+source_url: "https://www.comp.finance/proposals/117"
+tags:
+  - governance
+  - token-approval
+  - misconfiguration
+---
+
+## Summary
+
+Compound governance proposal 117, intended to distribute COMP token rewards, inadvertently allocated approximately $80 million in COMP tokens due to a smart contract configuration error. The proposal contained a bug that caused rewards to be distributed at a rate roughly 100x faster than intended.
+
+## Root Cause
+
+The vulnerability was in the `ProposalExecutor` contract. The proposal passed a configuration update that set the COMP distribution rate incorrectly. Specifically:
+
+- The proposal intended to set a reward rate of `2e28` COMP per block
+- Due to a unit conversion error, the actual rate became `2e30` COMP per block
+- This caused rewards to accrue much faster than the governance committee anticipated
+
+The error was introduced during the proposal's code review process and was not caught by the team before the vote passed.
+
+## Impact
+
+- ~80,000 COMP tokens were distributed incorrectly
+- The excess tokens could not be easily recovered once distributed
+- Required manual intervention and coordination with token recipients to return funds
+
+## Remediation
+
+- The governance team submitted a new proposal to correct the distribution rate
+- Community members and token recipients voluntarily returned excess tokens
+- Compound implemented additional review processes for governance proposals
+- Added automated unit checks for configuration parameters in future proposals

@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+:root {
+  --background: #000000;
+  --foreground: #ededed;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+.prose-custom {
+  @apply max-w-[72ch] font-mono text-sm leading-[1.8] text-zinc-400;
+}
+
+.prose-custom h1 {
+  @apply mb-4 mt-8 font-serif text-2xl font-bold text-zinc-100;
+}
+
+.prose-custom h2 {
+  @apply mb-3 mt-8 font-serif text-xl font-bold text-zinc-100;
+}
+
+.prose-custom h3 {
+  @apply mb-2 mt-6 font-serif text-lg font-semibold text-zinc-200;
+}
+
+.prose-custom p {
+  @apply mb-4;
+}
+
+.prose-custom ul {
+  @apply mb-4 ml-6 list-outside list-disc space-y-1;
+}
+
+.prose-custom ol {
+  @apply mb-4 ml-6 list-outside list-decimal space-y-1;
+}
+
+.prose-custom code {
+  @apply rounded bg-zinc-800 px-1 py-0.5 text-xs text-zinc-300;
+}
+
+.prose-custom pre {
+  @apply mb-6 overflow-x-auto border border-zinc-800 bg-zinc-900/50 p-4;
+}
+
+.prose-custom pre code {
+  @apply bg-transparent p-0;
+}
+
+.prose-custom blockquote {
+  @apply border-l-2 border-zinc-700 pl-4 text-zinc-500;
+}
+
+.prose-custom a {
+  @apply text-zinc-300 underline decoration-zinc-700 underline-offset-2 transition-colors hover:text-white;
+}
+
+.prose-custom strong {
+  @apply font-semibold text-zinc-200;
+}
+
+.prose-custom em {
+  @apply italic;
+}
+
+.prose-custom hr {
+  @apply my-8 border-zinc-800;
+}
+
+.prose-custom table {
+  @apply mb-6 w-full border-collapse;
+}
+
+.prose-custom th {
+  @apply border border-zinc-800 bg-zinc-900/50 px-4 py-2 text-left font-mono text-xs uppercase tracking-wider text-zinc-500;
+}
+
+.prose-custom td {
+  @apply border border-zinc-800 px-4 py-2;
+}

@@ -1,0 +1,44 @@
+---
+title: "Euler Finance $197M Flash Loan Attack"
+slug: "euler-finance-flash-loan"
+severity: "critical"
+protocol: "Euler Finance"
+chain: "Ethereum"
+category: "logic-error"
+date: "2023-03-13"
+source_url: "https://github.com/peckshield/publications/blob/master/analysis/Euler/euler.md"
+tags:
+  - flash-loan
+  - donation-attack
+  - erc-4626
+  - governance
+---
+
+## Summary
+
+On March 13, 2023, Euler Finance suffered a flash loan attack resulting in the loss of approximately $197 million across multiple assets. The attacker exploited a vulnerability in the Euler Protocol's donate functionality to manipulate the internal accounting of the protocol.
+
+## Root Cause
+
+The vulnerability existed in the `donate()` function of the Euler protocol. When users donated assets directly to the protocol, the protocol failed to properly update the internal accounting of existing positions. This allowed the attacker to:
+
+1. Take flash loans to deposit large amounts of collateral
+2. Donate the borrowed funds to inflate the value of existing positions
+3. Liquidate the inflated positions for profit
+
+The core issue was that donations were not accounted for in the risk calculations, creating an imbalance between the protocol's internal bookkeeping and the actual token balances.
+
+## Impact
+
+- Total loss: ~$197M across ETH, WBTC, USDC, DAI, and stETH
+- Attacker drained funds from multiple Euler pools
+- Governance tokens and other protocol assets were also affected
+
+## Remediation
+
+Euler Finance deployed patches to:
+- Remove or restrict the donate function
+- Add proper accounting checks for any value transferred to the protocol
+- Implement additional safeguards for flash loan interactions
+
+The team also negotiated with the attacker and recovered a significant portion of the stolen funds through on-chain communication.
