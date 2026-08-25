@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "@jridgewell/sourcemap-codec": "^1.4.14",
+    "@supabase/ssr": "^0.12.5",
+    "@supabase/supabase-js": "^2.112.4",
     "glob": "^11.0.3",
     "gray-matter": "^4.0.3",
     "next": "16.3.2",
