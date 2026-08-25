@@ -17,8 +17,10 @@ interface HackenAudit {
   platforms: string[];
   languages: string[];
   labels: string[];
-  scope_parameters?: { repository?: string };
+  total_findings: number;
+  scope_parameters?: { repository?: string; commit?: string; assets_audited?: string[] };
   issues?: { severity: string; name: string; status: string }[];
+  audited_contracts?: { chain: string; chainId?: number; address?: string }[];
   audit_description?: string;
 }
 
@@ -27,7 +29,10 @@ export class HackenAdapter implements AuditSourceAdapter {
 
   async discover(): Promise<RawRecord[]> {
     const res = await fetch(API_URL, {
-      headers: { Accept: "application/json" },
+      headers: {
+        Accept: "application/json",
+        "User-Agent": "VeylithRead/1.0",
+      },
     });
 
     if (!res.ok) {
@@ -57,6 +62,7 @@ export class HackenAdapter implements AuditSourceAdapter {
       reportUrl: audit.report_link,
       sourceUrl: audit.report_link ?? API_URL,
       auditor: "Hacken",
+      chain: audit.audited_contracts?.[0]?.chain ?? audit.platforms?.[0] ?? "",
       platforms: audit.platforms ?? [],
       languages: audit.languages ?? [],
       labels: audit.labels ?? [],
@@ -72,7 +78,7 @@ export class HackenAdapter implements AuditSourceAdapter {
 
   normalize(parsed: ParsedAudit): NormalizedAudit {
     const projectSlug = slugify(parsed.clientName);
-    const chain = parsed.platforms[0] ?? "";
+    const chain = parsed.chain ?? "";
 
     return {
       title: parsed.title,
@@ -148,8 +154,10 @@ function buildNormalizedContent(parsed: ParsedAudit): string {
     `client: ${parsed.clientName}`,
     `date: ${parsed.auditDate ?? "unknown"}`,
     `auditor: ${parsed.auditor}`,
+    `chain: ${parsed.chain}`,
     `platforms: ${parsed.platforms.join(", ")}`,
     `languages: ${parsed.languages.join(", ")}`,
+    `total_findings: ${parsed.findings.length}`,
     "",
     "Findings:",
   ];

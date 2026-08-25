@@ -14,6 +14,7 @@ export interface ParsedAudit {
   reportUrl: string | null;
   sourceUrl: string;
   auditor: string;
+  chain: string;
   platforms: string[];
   languages: string[];
   labels: string[];
