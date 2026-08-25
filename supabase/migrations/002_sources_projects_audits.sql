@@ -51,10 +51,12 @@ alter table public.projects enable row level security;
 
 create unique index projects_slug_unique on public.projects (slug);
 
-create policy "Projects: admin write, public read"
-  on public.projects
-  for all
-  using (public.is_admin() or true)
+create policy "Projects: public read"
+  on public.projects for select using (true);
+
+create policy "Projects: admin write"
+  on public.projects for all
+  using (public.is_admin())
   with check (public.is_admin());
 
 -- ======================
@@ -85,10 +87,12 @@ create unique index audits_source_url_unique
 create index audits_source_id_idx on public.audits (source_id);
 create index audits_project_id_idx on public.audits (project_id);
 
-create policy "Audits: admin write, public read"
-  on public.audits
-  for all
-  using (public.is_admin() or true)
+create policy "Audits: public read"
+  on public.audits for select using (true);
+
+create policy "Audits: admin write"
+  on public.audits for all
+  using (public.is_admin())
   with check (public.is_admin());
 
 -- ======================
@@ -114,10 +118,12 @@ create unique index findings_audit_external_id_unique
   on public.findings (audit_id, external_id)
   where external_id is not null;
 
-create policy "Findings: admin write, public read"
-  on public.findings
-  for all
-  using (public.is_admin() or true)
+create policy "Findings: public read"
+  on public.findings for select using (true);
+
+create policy "Findings: admin write"
+  on public.findings for all
+  using (public.is_admin())
   with check (public.is_admin());
 
 -- ======================
@@ -141,10 +147,12 @@ create unique index audit_versions_audit_version_unique
 
 create index audit_versions_audit_id_idx on public.audit_versions (audit_id);
 
-create policy "Audit versions: admin write, public read"
-  on public.audit_versions
-  for all
-  using (public.is_admin() or true)
+create policy "Audit versions: public read"
+  on public.audit_versions for select using (true);
+
+create policy "Audit versions: admin write"
+  on public.audit_versions for all
+  using (public.is_admin())
   with check (public.is_admin());
 
 -- ======================
