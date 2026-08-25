@@ -30,10 +30,10 @@ alter table public.sources enable row level security;
 
 create unique index sources_name_unique on public.sources (name);
 
-create policy "Sources: admin all, public read"
+create policy "Sources: admin only"
   on public.sources
   for all
-  using (public.is_admin() or true)
+  using (public.is_admin())
   with check (public.is_admin());
 
 -- ======================
@@ -109,6 +109,11 @@ alter table public.findings enable row level security;
 
 create index findings_audit_id_idx on public.findings (audit_id);
 
+-- Prevent duplicate findings per audit on re-sync.
+create unique index findings_audit_external_id_unique
+  on public.findings (audit_id, external_id)
+  where external_id is not null;
+
 create policy "Findings: admin write, public read"
   on public.findings
   for all
@@ -161,10 +166,10 @@ alter table public.sync_runs enable row level security;
 
 create index sync_runs_source_id_idx on public.sync_runs (source_id);
 
-create policy "Sync runs: admin all, public read"
+create policy "Sync runs: admin only"
   on public.sync_runs
   for all
-  using (public.is_admin() or true)
+  using (public.is_admin())
   with check (public.is_admin());
 
 -- ======================
