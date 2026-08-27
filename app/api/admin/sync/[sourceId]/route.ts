@@ -2,9 +2,11 @@ import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { runSync } from "@/lib/sources/orchestrator";
 import { HackenAdapter } from "@/lib/sources/hacken";
+import { ImmunefiAdapter } from "@/lib/sources/immunefi";
 
 const ADAPTERS: Record<string, () => import("@/lib/sources/types").AuditSourceAdapter> = {
   hacken: () => new HackenAdapter(),
+  immunefi: () => new ImmunefiAdapter(),
 };
 
 export async function POST(

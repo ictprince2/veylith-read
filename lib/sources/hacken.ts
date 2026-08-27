@@ -7,7 +7,7 @@ import type {
   ValidationResult,
 } from "./types";
 
-const API_URL = "https://hacken.io/api/audits";
+const API_URL = "https://hacken.io/api/audits/";
 
 interface HackenAudit {
   audit_name: string;
