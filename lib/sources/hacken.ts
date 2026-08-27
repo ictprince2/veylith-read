@@ -36,6 +36,17 @@ export class HackenAdapter implements AuditSourceAdapter {
     });
 
     if (!res.ok) {
+      const headers: Record<string, string> = {};
+      res.headers.forEach((v, k) => { headers[k] = v; });
+      let body = "";
+      try { body = await res.text(); } catch { body = "<could not read body>"; }
+      console.error("[HackenAdapter] Non-OK response", {
+        status: res.status,
+        statusText: res.statusText,
+        url: API_URL,
+        headers,
+        bodyPreview: body.slice(0, 2000),
+      });
       throw new Error(`Hacken API returned ${res.status}: ${res.statusText}`);
     }
 
