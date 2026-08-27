@@ -9,6 +9,13 @@ import type {
 
 const API_URL = "https://hacken.io/api/audits/";
 
+// NOTE: Hacken is disabled as of 2026-08-27.
+// Hacken's Cloudflare configuration returns cf-mitigated: challenge with an
+// interactive "Just a moment..." bot-check page. This is active bot protection
+// that cannot be bypassed server-side without circumventing their access controls.
+// The source row in the `sources` table has `enabled = false`.
+// If re-enabling, verify the API is accessible from Vercel's serverless environment first.
+
 interface HackenAudit {
   audit_name: string;
   client_name: string;
