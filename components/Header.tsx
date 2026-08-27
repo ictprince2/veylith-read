@@ -8,6 +8,9 @@ export function Header() {
           VEYLITH<span className="text-red-500">.</span>READ
         </Link>
         <nav className="flex items-center gap-6 text-sm font-mono text-zinc-400">
+          <Link href="/security/audits" className="transition-colors hover:text-zinc-100">
+            Audits
+          </Link>
           <Link href="/vulns" className="transition-colors hover:text-zinc-100">
             Vulns
           </Link>
